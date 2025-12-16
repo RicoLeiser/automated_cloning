@@ -193,7 +193,7 @@ if uploaded_file is not None and species:
                 
                 # Prepare Excel data
                 # Column 3: name_goi_species_genename_length
-                col3_name = f"{custom_name}_goi_{species}_{original_id}_{insert_length}"
+                col3_name = f"{custom_name}_GOI_{species}_{original_id}_{insert_length}"
                 excel_data.append({
                     'Clone Name': custom_name,
                     'Full Sequence': full_sequence,
