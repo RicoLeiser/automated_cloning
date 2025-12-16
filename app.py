@@ -15,7 +15,6 @@ BEGIN_SEQ = "CAGCGGCCGCCAAAAAACCCCTCAAGACCCGTTTAGAGGCCCCAAGGGGTTATGCTAAGAAGTTTAC
 END_SEQ = "ATTATCCCTATAGTGAGTCGTATTAGAAAGTTGTAGCATAACCCCTTGGGGCCTCTAAACGGGTCTTGAGGGGTTTTTTCTCGAGTA"
 
 # Annotations for BEGIN sequence (1-indexed to 0-indexed)
-# Annotations for BEGIN sequence (1-indexed to 0-indexed)
 BEGIN_ANNOTATIONS = [
     ("TT7-antisense", 10, 57),  # base pairs 11 to 57
     ("PT7-sense", 67, 87)       # base pairs 68 to 86
@@ -48,6 +47,12 @@ def clean_fasta_content(file_content):
 st.title("🧬 Cloning Manager - Sequence Assembly")
 st.write("Assemble sequences with hardcoded begin/end sequences and custom inserts")
 
+# Initialize session state variables
+if 'sequence_names' not in st.session_state:
+    st.session_state.sequence_names = {}
+if 'generated_files' not in st.session_state:
+    st.session_state.generated_files = False
+
 # Step 1: Species input
 st.header("Step 1: Define Species")
 species = st.text_input("Enter species name:", placeholder="e.g., Homo sapiens")
@@ -77,9 +82,6 @@ if uploaded_file is not None and species:
             
             # Step 3: Name assignment
             st.header("Step 3: Assign Names to Sequences")
-            
-            if 'sequence_names' not in st.session_state:
-                st.session_state.sequence_names = {}
             
             for i, seq_record in enumerate(sequences):
                 original_id = seq_record.id
@@ -191,7 +193,7 @@ if uploaded_file is not None and species:
                 
                 # Prepare Excel data
                 # Column 3: name_goi_species_genename_length
-                col3_name = f"{custom_name}_GOI_{species}_{original_id}_{insert_length}"
+                col3_name = f"{custom_name}_goi_{species}_{original_id}_{insert_length}"
                 excel_data.append({
                     'Clone Name': custom_name,
                     'Full Sequence': full_sequence,
